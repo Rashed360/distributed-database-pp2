@@ -1,5 +1,7 @@
 'use server'
 
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { Pool } from 'pg'
 import { actions, tables } from '@/constants/db'
 
@@ -9,9 +11,18 @@ const clients = {
 	db_3: new Pool({ connectionString: process.env.DB_3_URL }),
 }
 
+export async function logout() {
+	// Clear the user cookie
+	const cookieStore = cookies()
+	cookieStore.set('user', '', { maxAge: 0, path: '/' })
+
+	// Redirect to the login page
+	redirect('/login')
+}
+
 export async function database(db, action = actions.SELECT, table = '', values = {}) {
-	console.log(db,action,table,values)
-	
+	console.log(db, action, table, values)
+
 	if (!clients[String(db).toLowerCase()] || !table) return
 	if (!(action in actions) && !(table in tables)) return
 
@@ -63,7 +74,7 @@ export async function database(db, action = actions.SELECT, table = '', values =
 				break
 		}
 		const res = await clients[String(db).toLowerCase()].query(query, args)
-		// console.log(res.rows)		
+		// console.log(res.rows)
 		return res.rows
 	} catch (error) {
 		console.error('░ Failed to handle Query: ' + action + ' from DB: ' + db, '\nDatabase Error:', error)

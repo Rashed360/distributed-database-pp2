@@ -15,7 +15,7 @@ export default function App() {
 		email: '',
 		password: '',
 		fullname: '',
-		region: 1,
+		region: 'db_1',
 		role: ROLES[0].value,
 	})
 
