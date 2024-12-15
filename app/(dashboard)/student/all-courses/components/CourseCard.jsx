@@ -2,13 +2,13 @@
 
 import { enrollInCourse } from '../../actions'
 
-export default function CourseCard({ user, course }) {
-	console.log(course);
-	
-	const handleEnroll = async courseId => {
+export default function CourseCard({ course, userId }) {
+	const handleEnroll = async () => {
+		console.log('user:', userId, 'course', course.id)
+
 		try {
-			const response = await enrollInCourse(user.id, courseId)
-			alert(response.message) // Show success message
+			const response = await enrollInCourse(userId, course.id)
+			console.log(response.message) // Show success message
 		} catch (error) {
 			alert(error.message) // Show error message
 		}
@@ -24,7 +24,7 @@ export default function CourseCard({ user, course }) {
 				Created at: {new Date(course.createdat).toLocaleDateString()}
 			</p>
 			<button
-				onClick={() => handleEnroll(course.id)}
+				onClick={handleEnroll}
 				className='mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition'
 			>
 				Enroll

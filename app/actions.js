@@ -65,8 +65,8 @@ export async function database(db, action = actions.SELECT, table = '', values =
 			case actions.SELECT:
 				query = 'SELECT * FROM ' + table
 				if (data.length > 0) {
-					query += ' WHERE ' + data[0] + ' = $1'
-					args.push(values[data[0]])
+					query += ' WHERE ' + data.map((key, index) => `${key} = $${index + 1}`).join(' AND ')
+					args = Object.values(values)
 				}
 				break
 		}
