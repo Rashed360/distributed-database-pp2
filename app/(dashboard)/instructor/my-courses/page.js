@@ -2,6 +2,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { getMyCoursesForInstructor } from '../actions'
+import CourseCard from './components/CourseCard'
 
 export default async function MyCoursesPage() {
 	const data = await cookies().get('user')
@@ -31,17 +32,7 @@ export default async function MyCoursesPage() {
 			) : (
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 					{courses.map(course => (
-						<div
-							key={course.id}
-							className='p-4 border border-gray-300 rounded-lg shadow hover:shadow-md transition'
-						>
-							<h2 className='text-xl font-semibold'>{course.title}</h2>
-							<p className='text-gray-700 mt-2'>{course.category}</p>
-							<p className='text-gray-500 mt-1 text-sm'>{course.description}</p>
-							<p className='mt-4 text-sm text-gray-600'>
-								Created at: {new Date(course.createdat).toLocaleDateString()}
-							</p>
-						</div>
+						<CourseCard key={course.id} course={course} user={user} />
 					))}
 				</div>
 			)}

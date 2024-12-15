@@ -20,3 +20,87 @@ export async function getMyCoursesForInstructor(instructorId) {
 		throw new Error('Failed to fetch courses')
 	}
 }
+
+export async function getCourse(courseId) {
+	if (!courseId) {
+		throw new Error('Course ID is required')
+	}
+
+	try {
+		// Fetch the course from the database
+		const course = await database('db_1', actions.SELECT, tables.Courses, {
+			id: courseId,
+		})
+
+		if (!course || course.length === 0) {
+			throw new Error('Course not found')
+		}
+
+		return course[0] // Return the first course object
+	} catch (error) {
+		console.error('Failed to fetch course:', error)
+		throw new Error('Failed to fetch course')
+	}
+}
+
+export async function createCourse(title, category, description, instructorId) {
+	if (!title || !category || !description || !instructorId) {
+		throw new Error('Title, category, description, and instructorId are required')
+	}
+
+	try {
+		// Insert the new course into the Courses table
+		const newCourse = await database('db_1', actions.INSERT, tables.Courses, {
+			title,
+			category,
+			description,
+			instructorid: instructorId,
+			createdat: new Date(),
+		})
+
+		return { message: 'Course created successfully', courseId: newCourse[0].id }
+	} catch (error) {
+		console.error('Error creating course:', error)
+		throw new Error('Failed to create course')
+	}
+}
+
+export async function updateCourse(id, title, category, description) {
+	if (!id || !title || !category || !description) {
+		throw new Error('Course ID, title, category, and description are required')
+	}
+
+	try {
+		// Update the course in the database
+		await database('db_1', actions.UPDATE, tables.Courses, {
+			id,
+			title,
+			category,
+			description,
+		})
+
+		return { message: 'Course updated successfully' }
+	} catch (error) {
+		console.error('Error updating course:', error)
+		throw new Error('Failed to update course')
+	}
+}
+
+export async function deleteCourse(courseId) {
+	if (!courseId) {
+		throw new Error('Course ID is required')
+	}
+
+	try {
+		// Delete the course from the Courses table
+		await database('db_1', actions.DELETE, tables.Courses, { id: courseId })
+
+		// Remove the course from CourseStudents
+		// await database('db_1', actions.DELETE, tables.CourseStudents, { courseid: courseId })
+
+		return { message: 'Course deleted successfully' }
+	} catch (error) {
+		console.error('Error deleting course:', error)
+		throw new Error('Failed to delete course')
+	}
+}

@@ -20,8 +20,6 @@ export async function logout() {
 }
 
 export async function database(db, action = actions.SELECT, table = '', values = {}) {
-	console.log(db, action, table, values)
-
 	if (!clients[String(db).toLowerCase()] || !table) return
 	if (!(action in actions) && !(table in tables)) return
 
@@ -73,7 +71,6 @@ export async function database(db, action = actions.SELECT, table = '', values =
 				break
 		}
 		const res = await clients[String(db).toLowerCase()].query(query, args)
-		// console.log(res.rows)
 		return res.rows
 	} catch (error) {
 		console.error('░ Failed to handle Query: ' + action + ' from DB: ' + db, '\nDatabase Error:', error)

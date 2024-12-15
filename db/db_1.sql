@@ -45,6 +45,8 @@ INSERT INTO Instructors (fullName, email, password, regionId) VALUES
 INSERT INTO Courses (instructorId, title, category, description) VALUES
 (1, 'Advanced Java Programming', 'Programming', 'An advanced course in Java programming.'),
 (1, 'Data Structures and Algorithms', 'Computer Science', 'A comprehensive guide to data structures and algorithms.'),
+(1, 'JavaScript for Beginners', 'Programming', 'Master the basics of JavaScript for web development.'),
+(1, 'Digital Forensics', 'Cybersecurity', 'Explore digital forensics techniques and tools.'),
 (2, 'Web Development 101', 'Web Development', 'An introduction to web development using HTML, CSS, and JavaScript.'),
 (3, 'Machine Learning Basics', 'Data Science', 'Understanding machine learning algorithms and techniques.'),
 (4, 'Cybersecurity Fundamentals', 'Cybersecurity', 'A beginner’s guide to cybersecurity principles.'),
@@ -61,9 +63,7 @@ INSERT INTO Courses (instructorId, title, category, description) VALUES
 (15, 'Artificial Intelligence for Beginners', 'AI', 'Introduction to AI and its applications.'),
 (16, 'Cloud-native Development', 'Cloud Computing', 'Build scalable apps using cloud-native technologies.'),
 (17, 'Database Management Systems', 'Database', 'Learn about relational databases and SQL.'),
-(18, 'Python for Data Analysis', 'Programming', 'A hands-on course to analyze data with Python.'),
-(19, 'JavaScript for Beginners', 'Programming', 'Master the basics of JavaScript for web development.'),
-(20, 'Digital Forensics', 'Cybersecurity', 'Explore digital forensics techniques and tools.');
+(18, 'Python for Data Analysis', 'Programming', 'A hands-on course to analyze data with Python.');
 
 INSERT INTO CourseContents (courseId, contentType, dataContent) VALUES
 (1, 'Lecture', 'Introduction to Java and its features.'),
