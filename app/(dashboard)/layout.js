@@ -2,11 +2,11 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { REGIONS } from '@/constants/regions'
 import SideBar from '@/components/SideBar'
+import { regionToDB } from '@/constants/db'
 import Link from 'next/link'
 
 export default async function DashboardLayout({ children }) {
-	const cookieStore = await cookies()
-	const user = cookieStore.get('user')
+	const user = await cookies().get('user')
 
 	if (!user) {
 		// Redirect to login if no user cookie is found
@@ -24,8 +24,12 @@ export default async function DashboardLayout({ children }) {
 					<div className='grid place-content-center px-6'>
 						<select
 							className='px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition outline-none'
+							value={regionToDB[userData.regionid]}
 							disabled
 						>
+							<option className='text-black' value=''>
+								All Locations
+							</option>
 							{REGIONS.map(region => (
 								<option key={region.value} className='text-black' value={region.value}>
 									{region.label}

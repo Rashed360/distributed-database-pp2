@@ -13,8 +13,7 @@ const clients = {
 
 export async function logout() {
 	// Clear the user cookie
-	const cookieStore = cookies()
-	cookieStore.set('user', '', { maxAge: 0, path: '/' })
+	await cookies().set('user', '', { maxAge: 0, path: '/' })
 
 	// Redirect to the login page
 	redirect('/login')

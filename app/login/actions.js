@@ -44,8 +44,7 @@ export async function login({ email, password, role }) {
 						}
 
 						// Set cookies for the user
-						const cookieStore = cookies()
-						cookieStore.set('user', JSON.stringify(user), {
+						await cookies().set('user', JSON.stringify(user), {
 							httpOnly: true, // Prevent client-side access to cookie
 							secure: process.env.NODE_ENV === 'production', // Use secure flag in production
 							path: '/',
@@ -74,8 +73,7 @@ export async function login({ email, password, role }) {
 					}
 
 					// Set cookies for the user
-					const cookieStore = cookies()
-					cookieStore.set('user', JSON.stringify(user), {
+					await cookies().set('user', JSON.stringify(user), {
 						httpOnly: true,
 						secure: process.env.NODE_ENV === 'production',
 						path: '/',
