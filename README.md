@@ -1,4 +1,4 @@
-This is the part-2 (prototype) of the final project submitted to the "Distributed Database System" course under Projects.
+This is the part-2 (prototype) of our final project submitted to the "Distributed Database System" course under Projects.
 
 ## Running the application
 
