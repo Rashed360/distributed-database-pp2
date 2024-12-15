@@ -1,6 +1,7 @@
 'use server'
 
 import { Pool } from 'pg'
+import { actions, tables } from '@/constants/db'
 
 const clients = {
 	db_1: new Pool({ connectionString: process.env.DB_1_URL }),
@@ -8,26 +9,9 @@ const clients = {
 	db_3: new Pool({ connectionString: process.env.DB_3_URL }),
 }
 
-export const actions = {
-	SELECT: 'SELECT',
-	INSERT: 'INSERT',
-	UPDATE: 'UPDATE',
-	DELETE: 'DELETE',
-}
-
-export const tables = {
-	Regions: 'Regions',
-	Students: 'Students',
-	RegionalStudents: 'RegionalStudents',
-	Instructors: 'Instructors',
-	Courses: 'Courses',
-	CourseContents: 'CourseContents',
-	CourseStudents: 'CourseStudents',
-	Assignments: 'Assignments',
-	AssignmentSubmissions: 'AssignmentSubmissions',
-}
-
 export async function database(db, action = actions.SELECT, table = '', values = {}) {
+	console.log(db,action,table,values)
+	
 	if (!clients[String(db).toLowerCase()] || !table) return
 	if (!(action in actions) && !(table in tables)) return
 
@@ -72,9 +56,14 @@ export async function database(db, action = actions.SELECT, table = '', values =
 				break
 			case actions.SELECT:
 				query = 'SELECT * FROM ' + table
+				if (data.length > 0) {
+					query += ' WHERE ' + data[0] + ' = $1'
+					args.push(values[data[0]])
+				}
 				break
 		}
 		const res = await clients[String(db).toLowerCase()].query(query, args)
+		// console.log(res.rows)		
 		return res.rows
 	} catch (error) {
 		console.error('░ Failed to handle Query: ' + action + ' from DB: ' + db, '\nDatabase Error:', error)

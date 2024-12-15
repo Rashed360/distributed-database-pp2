@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import InputField from '@/components/InputField'
-import { database } from '@/app/actions'
+import { login } from './actions'
 
 export default function App() {
 	const router = useRouter()
@@ -17,11 +17,16 @@ export default function App() {
 
 	const onChange = e => setValues({ ...values, [e.target.name]: e.target.value })
 
-	const handleSignup = async e => {
+	const handleLogin = async e => {
 		e.preventDefault()
-		const res = database('db_1',)
-		console.log('User registered', values)
-		// router.push('/')
+
+		try {
+			const user = await login(values)
+			console.log('Login successful:', user)
+			router.push('/' + values.role)
+		} catch (error) {
+			console.error('Login failed:', error.message)
+		}
 	}
 
 	return (
@@ -46,7 +51,7 @@ export default function App() {
 							</select>
 						</div>
 					</div>
-					<form onSubmit={handleSignup}>
+					<form onSubmit={handleLogin}>
 						<InputField
 							label='Email'
 							name='email'

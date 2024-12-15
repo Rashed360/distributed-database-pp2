@@ -7,15 +7,15 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import InputField from '@/components/InputField'
 import SelectField from '@/components/SelectField'
+import { signup } from './actions'
 
 export default function App() {
 	const router = useRouter()
 	const [values, setValues] = useState({
 		email: '',
 		password: '',
-		fullName: '',
-		aboutMe: '',
-		region: '',
+		fullname: '',
+		region: 1,
 		role: ROLES[0].value,
 	})
 
@@ -23,8 +23,14 @@ export default function App() {
 
 	const handleSignup = async e => {
 		e.preventDefault()
-		console.log('User registered', values)
-		router.push('/login')
+
+		try {
+			const newUser = await signup(values)
+			console.log('Signup successful:', newUser)
+			router.push('/login')
+		} catch (error) {
+			console.error('Signup failed:', error.message)
+		}
 	}
 
 	return (
@@ -59,9 +65,9 @@ export default function App() {
 						/>
 						<InputField
 							label='Full Name'
-							name='fullName'
+							name='fullname'
 							type='text'
-							value={values.fullName}
+							value={values.fullname}
 							onChange={onChange}
 							required
 						/>
