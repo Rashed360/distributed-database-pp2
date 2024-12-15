@@ -10,7 +10,7 @@ export default async function MyCoursesPage() {
 
 	// Ensure the user is an instructor
 	if (user.role !== 'instructor') {
-		redirect('/') // Redirect to home page if the user is not an instructor
+		redirect('/')
 	}
 
 	// Fetch the instructor's courses
