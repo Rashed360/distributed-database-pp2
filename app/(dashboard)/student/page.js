@@ -1,3 +1,6 @@
+import { redirect } from 'next/navigation'
+import { tabs } from '@/constants/tabs'
+
 export default function App() {
-	return <main className='p-5'>student</main>
+	return redirect(tabs.student[0].link)
 }

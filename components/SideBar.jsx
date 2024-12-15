@@ -1,28 +1,16 @@
 'use client'
 
 import Link from 'next/link'
+import { tabs } from '@/constants/tabs'
 import { logout } from '@/app/actions'
 
 export default function SideBar({ userData }) {
 	const { role } = userData
-	const tabs = {
-		student: [
-			{ name: 'All Courses', link: '/student/all-courses' },
-			{ name: 'My Courses', link: '/student/my-courses' },
-			{ name: 'My Assignments', link: '/student/my-assignments' },
-			{ name: 'My Grades', link: '/student/my-grades' },
-		],
-		instructor: [
-			{ name: 'My Courses', link: '/instructor/my-courses' },
-			{ name: 'My Assignments', link: '/instructor/my-assignments' },
-			{ name: 'My Students', link: '/instructor/my-students' },
-		],
-	}
 
 	const userTabs = tabs[role] || []
 
 	return (
-		<aside className='col-span-3 flex flex-col bg-stone-900'>
+		<aside className='h-screen col-span-3 flex flex-col bg-stone-900 overflow-y-auto'>
 			<div className='h-16 flex justify-center items-center bg-stone-700'>
 				<p className='font-bold text-white text-2xl'>EduOnline</p>
 			</div>

@@ -19,7 +19,7 @@ export default async function DashboardLayout({ children }) {
 	return (
 		<div className='h-screen grid grid-cols-12 overflow-hidden'>
 			<SideBar userData={userData} />
-			<div className='col-span-9'>
+			<div className='h-screen col-span-9'>
 				<header className='w-full h-16 flex justify-between bg-stone-800 text-white'>
 					<div className='grid place-content-center px-6'>
 						<select
@@ -50,7 +50,9 @@ export default async function DashboardLayout({ children }) {
 						)}
 					</div>
 				</header>
-				{children}
+				<main className='h-screen overflow-y-auto' style={{ height: 'calc(100vh - 4rem)' }}>
+					{children}
+				</main>
 			</div>
 		</div>
 	)
